@@ -2,6 +2,7 @@ package com.example.android.reportcard;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,40 +15,59 @@ public class ReportCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_card);
 
-        Module history = new Module(1987435, "History");
-        Module geography = new Module(1987465, "Geography");
-        Module maths = new Module(1986435, "Maths");
-        Module psychology = new Module(1887435, "Psychology");
-        Module french = new Module(1987415, "French");
-        Module spanish = new Module(1987635, "Spanish");
-        Module statistics = new Module(1095435, "Statistics");
-        Module java = new Module(1987222, "Java");
+        // Instantiate a new ReportCard object. Set attributes to null initially while using inner
+        // classes to create the attributes of the ReportCard later.
+        ReportCard reportCard = new ReportCard();
 
-        ArrayList<Module> modulesList = new ArrayList<Module>();
-        modulesList.add(history);
-        modulesList.add(geography);
-        modulesList.add(maths);
-        modulesList.add(psychology);
-        modulesList.add(french);
-        modulesList.add(spanish);
-        modulesList.add(statistics);
-        modulesList.add(java);
+        /*
+         * Create an ArrayList of modules, accessing the inner Module class from the newly
+         * instantiated ReportCard object. Add new Modules using the pseudo constructor which
+         * itself accessing the class constructor of the Module class.
+         */
+        ArrayList<ReportCard.Module> modulesList = new ArrayList<>();
+        modulesList.add(reportCard.newModule(1987435, "History"));
+        modulesList.add(reportCard.newModule(1987465, "Geography"));
+        modulesList.add(reportCard.newModule(1986435, "Maths"));
+        modulesList.add(reportCard.newModule(1887435, "Psychology"));
+        modulesList.add(reportCard.newModule(1987415, "French"));
+        modulesList.add(reportCard.newModule(1987635, "Spanish"));
+        modulesList.add(reportCard.newModule(1095435, "Statistics"));
+        modulesList.add(reportCard.newModule(1987222, "Java"));
+        modulesList.add(reportCard.newModule(1989922, "Chemistry"));
+        modulesList.add(reportCard.newModule(1230986, "Physics"));
 
+        // Create a student passing in the ArrayList of Modules too.
+        ReportCard.Student student = reportCard.newStudent(modulesList);
 
-        Student student = new Student(4579834, "John Green", modulesList);
+        // Create an ArrayList of Grade objects to store the grades the student got in each module.
+        ArrayList<ReportCard.Grade> gradesList = new ArrayList<>();
 
-        ArrayList<Grade> gradesList = new ArrayList<>();
-
+        // Use a random number generator for the final mark the student got.
         Random rand = new Random();
 
-        for(Module module:modulesList){
-            gradesList.add(new Grade(student, module, rand.nextInt(101)));
+        // Loop through the modules ArrayList and create a new grade at random, between 1 and 100,
+        // for each module.
+        for(ReportCard.Module module:modulesList){
+            gradesList.add(reportCard.newGrade(student, module, rand.nextInt(101)));
         }
 
-        ReportCard reportCard = new ReportCard(student, gradesList);
+        // Now we have created the Student and Grades we can set the ReportCard objects attributes
+        // to their true value.
+        reportCard.setmStudent(student);
+        reportCard.setmGrades(gradesList);
 
-        TextView reportCardView = (TextView) findViewById(R.id.report_card);
-        reportCardView.setText(reportCard.toString());
+        TextView nameTextView = (TextView) findViewById(R.id.student_name);
+        nameTextView.setText(student.getmStudentName());
+
+        TextView idTextView = (TextView) findViewById(R.id.student_id);
+        idTextView.setText(String.valueOf(student.getmStudentID()));
+
+        ReportCardAdapter reportCardAdapter = new ReportCardAdapter(this, reportCard);
+
+        // Find the {@link ListView} object from the view hierarchy of the {@link Activity} and use
+        // the {@link ArrayAdapter} created above to populate the list.
+        ListView reportCardList = (ListView) findViewById(R.id.report_card_list);
+        reportCardList.setAdapter(reportCardAdapter);
     }
 
 

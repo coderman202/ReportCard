@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/report_card_padding"
     tools:context="com.example.android.reportcard.ReportCardActivity">
 
-    <TextView
-        android:id="@+id/report_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <TextView style="@style/ReportCardHeaderItem"
+        android:id="@+id/name"
+        android:text="@string/name"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/student_name"/>
+
+    <TextView style="@style/ReportCardHeaderItem"
+        android:id="@+id/student_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView style="@style/ReportCardHeaderItem"
+        android:id="@+id/id"
+        android:text="@string/id"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/student_id"/>
+
+    <TextView style="@style/ReportCardHeaderItem"
+        android:id="@+id/student_id"
+        app:layout_constraintTop_toBottomOf="@id/student_name"
+        app:layout_constraintStart_toEndOf="@id/id"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView style="@style/ReportCardSubHeaderItem"
+        android:id="@+id/module"
+        android:text="@string/module"
+        app:layout_constraintTop_toBottomOf="@id/id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/mark"
+        app:layout_constraintBottom_toTopOf="@+id/report_card_list"/>
+
+    <TextView style="@style/ReportCardSubHeaderItem"
+        android:id="@+id/mark"
+        android:text="@string/mark"
+        app:layout_constraintTop_toBottomOf="@id/id"
+        app:layout_constraintStart_toEndOf="@id/module"
+        app:layout_constraintEnd_toStartOf="@+id/grade"
+        app:layout_constraintBottom_toTopOf="@+id/report_card_list"/>
+
+    <TextView style="@style/ReportCardSubHeaderItem"
+        android:id="@+id/grade"
+        android:text="@string/grade"
+        app:layout_constraintTop_toBottomOf="@id/student_id"
+        app:layout_constraintStart_toEndOf="@id/mark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/report_card_list"/>
+
+
+
+    <ListView
+        android:id="@+id/report_card_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grade">
+
+    </ListView>
 
 </android.support.constraint.ConstraintLayout>
