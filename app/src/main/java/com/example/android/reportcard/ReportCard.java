@@ -3,7 +3,15 @@ package com.example.android.reportcard;
 import java.util.ArrayList;
 
 /**
- * A custom class for report cards.
+ * A custom class for report cards. This class contains 2 attributes. An attribute for the Student,
+ * represented by a custom student class object, declared as an inner class below, and then an
+ * ArrayList of custom Grade class objects, again declared as an inner class below. I have also
+ * written custom inner classes for Modules and Teachers, with methods contained within.
+ *
+ * I initially wrote all the custom classes separately before realising I was only allowed submit it
+ * in one class file. I then came up with this solution. Ideally the classes would be separated out
+ * and the ReportCard constructor below would initialise both its attributes that would be passed as
+ * parameters.
  */
 public class ReportCard {
 
@@ -12,7 +20,9 @@ public class ReportCard {
 
     /**
      * Instantiates a new Report card.
-     * Not setting any attributes as they must be created before they can be set.
+     * Not setting any attributes as they are inner classes and each must be instantiated first.
+     * Otherwise I would have to set both to null, initially before setting them later in the pseudo
+     * constructors below.
      */
     public ReportCard() {
     }
